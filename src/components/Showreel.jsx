@@ -77,7 +77,7 @@ export default function Showreel() {
               <iframe
                 ref={iframeRef}
                 className="w-full h-full absolute inset-0"
-                src="src/assets/697afd760aee4cfabd16803dcbdd22a5.MP4"
+                src="https://www.youtube.com/embed/sJTKp5j-Nd0?si=Bd_VQmxnHr5BVrQ"
                 title="Showreel"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
