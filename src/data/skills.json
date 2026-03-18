@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "name": "Adobe Premiere Pro",
+    "icon": "SiAdobepremierepro",
+    "level": 98,
+    "color": "#9999FF",
+    "category": "Editing"
+  },
+  {
+    "id": 2,
+    "name": "After Effects",
+    "icon": "SiAdobeaftereffects",
+    "level": 95,
+    "color": "#9999FF",
+    "category": "VFX"
+  },
+  {
+    "id": 3,
+    "name": "DaVinci Resolve",
+    "icon": "SiDavinciresolve",
+    "level": 92,
+    "color": "#FFA500",
+    "category": "Color"
+  },
+  {
+    "id": 4,
+    "name": "Adobe Photoshop",
+    "icon": "SiAdobephotoshop",
+    "level": 88,
+    "color": "#31A8FF",
+    "category": "Design"
+  },
+  {
+    "id": 5,
+    "name": "CapCut",
+    "icon": "scicapcut",
+    "level": 85,
+    "color": "#999999",
+    "category": "Editing"
+  },
+  {
+    "id": 6,
+    "name": "illustrator",
+    "icon": "SiBlender",
+    "level": 60,
+    "color": "#F5792A",
+    "category": "2D"
+  },
+  {
+    "id": 7,
+    "name": "Canva/figma",
+    "icon": "SiFigma",
+    "level": 70,
+    "color": "#F24E1E",
+    "category": "Design"
+  },
+  {
+    "id": 8,
+    "name": "Adobe Express",
+    "icon": "SiAdobeexpress",
+    "level": 87,
+    "color": "#9999FF",
+    "category": "Design"
+  }
+]
