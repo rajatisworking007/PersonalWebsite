@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { FaAward, FaFilm, FaGlobe, FaStar } from 'react-icons/fa';
+import profileImg from '../assets/Screenshot 2026-03-16 at 4.38.10 PM.png';
 
 const achievements = [
   { icon: FaFilm, value: ' 150+', label: 'Videos Edited' },
@@ -36,7 +37,7 @@ export default function About() {
               <div className="relative overflow-hidden border-2 border-spider-red/60"
                 style={{ boxShadow: '0 0 40px rgba(255,26,26,0.3)' }}>
                 <img
-                  src="src/assets/Screenshot 2026-03-16 at 4.38.10 PM.png"
+                  src={profileImg}
                   alt="Rajat - Video Editor"
                   className="w-full aspect-[3/4] object-cover grayscale contrast-110"
                 />
@@ -44,7 +45,7 @@ export default function About() {
 
                 {/* Overlay text */}
                 <div className="absolute bottom-6 left-6">
-                  <p className="text-spider-red text-xs font-semibold uppercase tracking-widest">Since 2017</p>
+                  <p className="text-spider-red text-xs font-semibold uppercase tracking-widest">Since 2024</p>
                   <p className="text-white text-2xl font-bold" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
                     Crafting Visual Stories
                   </p>

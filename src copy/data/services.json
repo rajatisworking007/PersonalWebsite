@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "icon": "FaFilm",
+    "title": "Cinematic Video Editing",
+    "description": "Hollywood-grade storytelling through precision cuts, color grading, and dynamic pacing that captivates audiences from first frame to last.",
+    "features": ["4K / 8K Editing", "Color Grading", "Sound Design", "Narrative Structure"]
+  },
+  {
+    "id": 2,
+    "icon": "FaMagic",
+    "title": "Visual Effects (VFX)",
+    "description": "Photorealistic VFX compositing using industry-standard tools including After Effects, Nuke, and Blender for stunning visual results.",
+    "features": ["Motion Tracking", "Particle Systems", "Compositing", "3D Integration"]
+  },
+  {
+    "id": 3,
+    "icon": "FaBolt",
+    "title": "YouTube / Social Media Editing",
+    "description": "Algorithm-optimized content editing with hooks, retention strategies, and platform-specific pacing for maximum engagement and growth.",
+    "features": ["Hook Optimization", "Thumbnail Design", "Retention Editing", "Platform Sizing"]
+  },
+  {
+    "id": 4,
+    "icon": "FaLayerGroup",
+    "title": "Motion Graphics",
+    "description": "Custom animated titles, lower thirds, transitions, and branded intros/outros that elevate your content to a professional level.",
+    "features": ["Custom Animations", "Branded Intros", "Lower Thirds", "Logo Animation"]
+  },
+  {
+    "id": 5,
+    "icon": "FaVideo",
+    "title": "Commercial & Brand Videos",
+    "description": "High-converting commercial video production for brands, with cinematic quality and strategic messaging that drives real results.",
+    "features": ["Brand Strategy", "Ad Creatives", "Product Videos", "Campaign Edits"]
+  },
+  {
+    "id": 6,
+    "icon": "FaInfinity",
+    "title": "Shorts & Reels Creation",
+    "description": "Viral short-form content optimized for TikTok, Instagram Reels, and YouTube Shorts with trending techniques and hooks.",
+    "features": ["Viral Hooks", "Quick Cuts", "Trending Audio", "Engagement Tactics"]
+  }
+]

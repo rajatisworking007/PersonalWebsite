@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronLeft, FaChevronRight, FaStar, FaQuoteLeft } from 'react-icons/fa';
+import avatar1 from '../assets/IMG_5194.jpeg';
+import avatar2 from '../assets/IMG_5195.jpeg';
+import avatar3 from '../assets/IMG_5198.jpeg';
+import avatar4 from '../assets/IMG_5199.jpeg';
 
 const testimonials = [
   {
     id: 1,
     name: 'sarthak shrivastava',
     role: 'Rapper',
-    avatar: 'src/assets/IMG_5194.jpeg',
+    avatar: avatar1,
     rating: 5,
     text: "Sach bolu toh banda sirf edit nahi karta, pura vibe build karta hai ,Agar kisi ko apne content ko next level pe le jaana hai, Rajat is the guy 💯",
   },
@@ -15,7 +19,7 @@ const testimonials = [
     id: 2,
     name: 'Shreshth Singh',
     role: 'Content Creator',
-    avatar: 'src/assets/IMG_5195.jpeg',
+    avatar: avatar2,
     rating: 5,
     text: "Working with Rajat has been smooth and reliable,If you want someone who can elevate your videos and deliver consistently, Rajat do well .",
   },
@@ -23,7 +27,7 @@ const testimonials = [
     id: 3,
     name: 'Sparshika',
     role: 'Graphic Designer ',
-    avatar: 'src/assets/IMG_5198.jpeg',
+    avatar: avatar3,
     rating: 5,
     text: "abcd",
   },
@@ -31,7 +35,7 @@ const testimonials = [
     id: 4,
     name: 'Yash Sarathe',
     role: 'Social Media Manager & editor',
-    avatar: 'src/assets/IMG_5199.jpeg',
+    avatar: avatar4,
     rating: 5,
     text: "Abcd",
   },

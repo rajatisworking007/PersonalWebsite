@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-scroll';
 import { FaPlay, FaChevronDown } from 'react-icons/fa';
+import posterImg from '../assets/sagittarius-a-black-5120x2880-25401.jpg';
+import bgVideo from '../assets/Wallpaper F1 4K TEST EDIT AMD_2160p60.mp4';
 
 const stats = [
   { value: '150+', label: 'Projects Delivered' },
@@ -23,10 +25,10 @@ export default function Hero() {
           loop
           playsInline
           className="w-full h-full object-cover opacity-30"
-          poster="src/assets/sagittarius-a-black-5120x2880-25401.jpg"
+          poster={posterImg}
         >
           <source
-            src="src/assets/Wallpaper F1 4K TEST EDIT AMD_2160p60.mp4"
+            src={bgVideo}
             type="video/mp4"
           />
         </video>

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaPlay, FaExpand, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
+import thumbImg from '../assets/IMG_5170.jpeg';
 
 export default function Showreel() {
   const [playing, setPlaying] = useState(false);
@@ -52,7 +53,7 @@ export default function Showreel() {
                 onClick={() => setPlaying(true)}
               >
                 <img
-                  src="src/assets/IMG_5170.jpeg"
+                  src={thumbImg}
                   alt="Showreel Thumbnail"
                   className="w-full h-full object-cover"
                 />
