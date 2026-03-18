@@ -4,7 +4,7 @@
     "title": "Cinemaic Mountain",
     "category": "Cinematic Edits",
     "description": "A cinematic mountain exploration piece blending day videography with dynamic angle.",
-    "thumbnail": "public/images/IMG_5176.jpg",
+    "thumbnail": "https://res.cloudinary.com/dtcukrzgf/image/upload/v1773814731/IMG_5176_gft2e3.jpg",
     "videoUrl": "https://www.youtube.com/embed/YGUWZj1wS5A?si=a6_1x_LWsI4NCytP",
     "tags": [
       "Cinematic",
@@ -19,7 +19,7 @@
     "title": "Smooth CutOut EDIT",
     "category": " overlay Editing",
     "description": "High-energy YouTube video with rapid cuts, sound design and custom motion graphics.",
-    "thumbnail": "public/images/Screenshot 2026-03-16 at 3.41.38 PM.png",
+    "thumbnail": "phttps://res.cloudinary.com/dtcukrzgf/image/upload/v1773838397/Screenshot_2026-03-16_at_3.41.38_PM_e5vvte.png",
     "videoUrl": "https://www.youtube.com/embed/paj4DtTSrKE?si=i5jcmSWnh0dBOgkt",
     "tags": [
       "YouTube",
@@ -34,7 +34,7 @@
     "title": "Frame Zero",
     "category": "Shorts / Reels",
     "description": "Viral short-form content with punchy edits optimized for Instagram Reels and YouTube Shorts.",
-    "thumbnail": "public/images/IMG_5177.jpg",
+    "thumbnail": "https://res.cloudinary.com/dtcukrzgf/image/upload/v1773814735/IMG_5177_agkuxy.jpg",
     "videoUrl": "https://www.youtube.com/embed/s-5GqerIiYI?si=ihpa5lEXGRTUB4zy",
     "tags": [
       "Reels",
@@ -49,7 +49,7 @@
     "title": "Fast Effect",
     "category": "effects Edits",
     "description": "Sci-fi inspired VFX compositing with particle effects, lens flares and 3D integration.",
-    "thumbnail": "public/images/Screenshot 2026-03-16 at 4.06.29 PM.png",
+    "thumbnail": "https://res.cloudinary.com/dtcukrzgf/image/upload/v1773814735/IMG_5170_amu5us.jpg",
     "videoUrl": "https://www.youtube.com/embed/sJTKp5j-Nd0?si=Bd_VQmxnHr5BVrQ",
     "tags": [
       "VFX",
@@ -64,7 +64,7 @@
     "title": "Personal Vlog",
     "category": "YouTube Editing",
     "description": "Personal vlog shoot video for a Vloger featuring fast cuts , slomo and transitions.",
-    "thumbnail": "public/images/Screenshot 2026-03-16 at 3.57.42 PM.png",
+    "thumbnail": "https://res.cloudinary.com/dtcukrzgf/image/upload/v1773814738/Screenshot_2026-03-16_at_3.57.42_PM_cq5r2a.png",
     "videoUrl": "https://www.youtube.com/embed/0bKgsGT6P5s?si=WVT0rAQ_w877Pu9x",
     "tags": [
       "Brand",
