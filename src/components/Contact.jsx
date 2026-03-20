@@ -145,7 +145,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     className="w-full bg-[#050505] border border-white/10 focus:border-white/50 text-white text-sm px-4 py-3 outline-none transition-colors placeholder-white/10"
-                    placeholder="John Doe"
+                    placeholder="rajat"
                   />
                 </div>
                 <div>
@@ -157,7 +157,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     className="w-full bg-[#050505] border border-white/10 focus:border-white/50 text-white text-sm px-4 py-3 outline-none transition-colors placeholder-white/10"
-                    placeholder="agent@domain.com"
+                    placeholder="Rajatisworking007@gmail.com"
                   />
                 </div>
               </div>
