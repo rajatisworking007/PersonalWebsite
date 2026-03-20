@@ -7,26 +7,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        'spider-black': '#0a0a0a',
-        'spider-dark': '#111111',
-        'spider-red': '#ff1a1a',
-        'spider-red-dark': '#b30000',
-        'spider-red-glow': '#ff4444',
-        'spider-gray': '#1a1a1a',
-        'spider-card': '#0d0d0d',
+        'spider-black': '#000000',
+        'spider-dark': '#0a0a0a',
+        'spider-red': '#ffffff',
+        'spider-red-dark': '#a3a3a3',
+        'spider-red-glow': '#ffffff',
+        'spider-gray': '#111111',
+        'spider-card': '#0a0a0a',
       },
       fontFamily: {
         'heading': ['Bebas Neue', 'Impact', 'sans-serif'],
         'body': ['Inter', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
-        'red-gradient': 'linear-gradient(135deg, #ff1a1a 0%, #b30000 100%)',
-        'dark-gradient': 'linear-gradient(180deg, #0a0a0a 0%, #111111 100%)',
+        'red-gradient': 'linear-gradient(135deg, #ffffff 0%, #a3a3a3 100%)',
+        'dark-gradient': 'linear-gradient(180deg, #000000 0%, #0a0a0a 100%)',
       },
       boxShadow: {
-        'red-glow': '0 0 20px rgba(255, 26, 26, 0.5), 0 0 40px rgba(255, 26, 26, 0.2)',
-        'red-glow-lg': '0 0 40px rgba(255, 26, 26, 0.7), 0 0 80px rgba(255, 26, 26, 0.3)',
-        'red-glow-sm': '0 0 10px rgba(255, 26, 26, 0.4)',
+        'red-glow': '0 0 20px rgba(255, 255, 255, 0.4), 0 0 40px rgba(255, 255, 255, 0.1)',
+        'red-glow-lg': '0 0 40px rgba(255, 255, 255, 0.5), 0 0 80px rgba(255, 255, 255, 0.2)',
+        'red-glow-sm': '0 0 10px rgba(255, 255, 255, 0.3)',
         'card': '0 4px 24px rgba(0,0,0,0.8)',
       },
       animation: {
@@ -37,8 +37,8 @@ export default {
       },
       keyframes: {
         pulseRed: {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(255,26,26,0.4)' },
-          '50%': { boxShadow: '0 0 40px rgba(255,26,26,0.8), 0 0 60px rgba(255,26,26,0.4)' },
+          '0%, 100%': { boxShadow: '0 0 20px rgba(255,255,255,0.3)' },
+          '50%': { boxShadow: '0 0 40px rgba(255,255,255,0.6), 0 0 60px rgba(255,255,255,0.2)' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },

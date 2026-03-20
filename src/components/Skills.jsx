@@ -1,119 +1,108 @@
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import skills from '../data/skills.json';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { FaPlay, FaFilm, FaLaptopCode, FaTools } from 'react-icons/fa';
+import skillsData from '../data/skills.json';
 
-const categoryColors = {
-  Editing: '#9999FF',
-  VFX: '#FF6B6B',
-  Color: '#FFA500',
-  Design: '#31A8FF',
-  Audio: '#00FF88',
-  '3D': '#F5792A',
-};
+gsap.registerPlugin(ScrollTrigger);
+
+const getCatIcon = (cat) => {
+  if (cat === 'Editing') return <FaFilm className="text-white/50 text-xl" />;
+  if (cat === 'VFX' || cat === '2D') return <FaPlay className="text-white/50 text-xl" />;
+  if (cat === 'Design') return <FaTools className="text-white/50 text-xl" />;
+  return <FaLaptopCode className="text-white/50 text-xl" />;
+}
 
 export default function Skills() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true });
+  const container = useRef(null);
+
+  useGSAP(() => {
+    gsap.from('.skills-header', {
+      scrollTrigger: { trigger: container.current, start: 'top 80%' },
+      opacity: 0, x: -30, duration: 1.5, ease: 'power2.out'
+    });
+
+    gsap.from('.skills-content', {
+      scrollTrigger: { trigger: container.current, start: 'top 75%' },
+      opacity: 0, x: 30, duration: 1.5, ease: 'power2.out'
+    });
+
+    const progressBars = gsap.utils.toArray('.progress-fill');
+    progressBars.forEach((bar) => {
+      gsap.to(bar, {
+        scrollTrigger: {
+          trigger: bar,
+          start: 'top 90%',
+        },
+        width: bar.dataset.progress,
+        duration: 1.8,
+        ease: 'power4.out'
+      });
+    });
+  }, { scope: container });
 
   return (
-    <section id="skills" className="relative py-28 bg-spider-black overflow-hidden">
-      {/* Glow */}
-      <div className="absolute top-1/3 left-0 w-[400px] h-[400px] bg-spider-red/5 blur-[100px] pointer-events-none" />
+    <section id="skills" ref={container} className="relative py-32 bg-black border-t border-white/5 overflow-hidden">
+      
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          
+          {/* Left Column */}
+          <div className="skills-header">
+            <p className="text-white/40 text-[10px] font-semibold uppercase tracking-[0.6em] mb-4">
+              — Arsenal —
+            </p>
+            <h2 className="section-title text-5xl md:text-7xl tracking-widest text-white/90 mb-8" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
+              SOFTWARE & SKILLS
+            </h2>
+            <div className="w-16 h-px bg-white/20 mb-8" />
+            <p className="text-gray-500 text-sm leading-relaxed mb-12 max-w-lg">
+              Mastery over industry-standard tools is just the baseline. The real skill lies in combining them to engineer cold, hard, cinematic reality from pure imagination.
+            </p>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <p className="text-spider-red text-sm font-semibold uppercase tracking-[0.4em] mb-4">
-            — Toolkit —
-          </p>
-          <h2 className="section-title text-5xl md:text-7xl">
-            EDITING <span className="text-gradient-red">SKILLS</span>
-          </h2>
-          <span className="red-line mx-auto" />
-          <p className="text-gray-400 max-w-xl mx-auto mt-4">
-            Industry-leading tools mastered through years of hands-on professional experience.
-          </p>
-        </motion.div>
-
-        {/* Skills list */}
-        <div ref={ref} className="max-w-4xl mx-auto space-y-8">
-          {skills.map((skill, i) => (
-            <motion.div
-              key={skill.id}
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="group"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-3">
-                  <span
-                    className="w-2 h-2 rounded-full flex-shrink-0"
-                    style={{ backgroundColor: categoryColors[skill.category] || '#ff1a1a' }}
-                  />
-                  <span className="text-white font-semibold text-base group-hover:text-spider-red transition-colors duration-300">
-                    {skill.name}
-                  </span>
-                  <span
-                    className="text-xs px-2 py-0.5 rounded-sm font-medium uppercase tracking-wider"
-                    style={{
-                      backgroundColor: `${categoryColors[skill.category]}15`,
-                      color: categoryColors[skill.category],
-                      border: `1px solid ${categoryColors[skill.category]}30`
-                    }}
-                  >
-                    {skill.category}
-                  </span>
-                </div>
-                <span className="text-spider-red font-bold text-sm">{skill.level}%</span>
-              </div>
-
-              {/* Bar background */}
-              <div className="relative h-2 bg-spider-gray rounded-full overflow-hidden">
-                {/* Animated fill */}
-                <motion.div
-                  className="absolute top-0 left-0 h-full rounded-full"
-                  style={{
-                    background: `linear-gradient(90deg, #b30000, #ff1a1a, #ff4444)`,
-                    boxShadow: '0 0 10px rgba(255,26,26,0.5)',
-                  }}
-                  initial={{ width: 0 }}
-                  animate={inView ? { width: `${skill.level}%` } : { width: 0 }}
-                  transition={{ duration: 1.2, delay: 0.2 + i * 0.1, ease: 'easeOut' }}
-                />
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Software icons legend */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.5 }}
-          className="mt-20 text-center"
-        >
-          <p className="text-gray-500 text-xs uppercase tracking-widest mb-8">Also proficient in</p>
-          <div className="flex flex-wrap justify-center gap-4">
-            {['Nuke', 'Cinema 4D', 'Audacity', 'Lightroom', 'CapCut', 'Logic Pro X'].map((tool, i) => (
-              <motion.div
-                key={tool}
-                whileHover={{ scale: 1.1, borderColor: '#ff1a1a', color: '#ff1a1a' }}
-                className="px-4 py-2 border border-gray-800 text-gray-500 text-sm font-medium transition-all duration-300 cursor-default"
-              >
-                {tool}
-              </motion.div>
-            ))}
+            <div className="grid grid-cols-2 gap-4">
+              {['Editing', 'VFX', 'Color Grading', 'Motion Design'].map((cat) => (
+                  <div key={cat} className="p-5 border border-white/5 bg-[#030303] hover:border-white/20 transition-colors flex flex-col items-center justify-center text-center">
+                    <h4 className="text-white/80 text-[10px] tracking-widest uppercase font-semibold">{cat}</h4>
+                  </div>
+              ))}
+            </div>
           </div>
-        </motion.div>
+
+          {/* Right Column */}
+          <div className="skills-content">
+            <h3 className="text-white text-sm tracking-widest uppercase font-semibold mb-8 flex items-center gap-3">
+              <span className="w-4 h-px bg-white" />
+              Technical Proficiency
+            </h3>
+            <div className="space-y-6">
+              {skillsData.map((skill) => (
+                <div key={skill.id}>
+                  <div className="flex justify-between items-end mb-2">
+                    <div className="flex items-center gap-3">
+                      {getCatIcon(skill.category)}
+                      <div>
+                        <span className="text-white/90 text-xs tracking-widest uppercase block">{skill.name}</span>
+                        <span className="text-white/30 text-[9px] tracking-widest uppercase block mt-1">{skill.category}</span>
+                      </div>
+                    </div>
+                    <span className="text-gray-500 text-[10px] tracking-widest">{skill.level}%</span>
+                  </div>
+                  {/* Noir Progress Bar */}
+                  <div className="h-0.5 w-full bg-white/5">
+                    <div
+                      className="progress-fill h-full bg-white w-0"
+                      data-progress={`${skill.level}%`}
+                      style={{ boxShadow: '0 0 10px rgba(255,255,255,0.2)' }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   );

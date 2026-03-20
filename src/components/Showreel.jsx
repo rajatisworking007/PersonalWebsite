@@ -1,112 +1,111 @@
 import { useRef, useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaPlay, FaExpand, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { FaPlay } from 'react-icons/fa';
 import thumbImg from '../assets/IMG_5170.jpeg';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Showreel() {
   const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(true);
-  const iframeRef = useRef(null);
+  const container = useRef(null);
+
+  useGSAP(() => {
+    // Noir Silhouette Entrance Animation
+    gsap.from('.showreel-header', {
+      scrollTrigger: { trigger: container.current, start: 'top 80%' },
+      opacity: 0,
+      y: 20,
+      duration: 1.5,
+      ease: 'power2.out'
+    });
+
+    // Sharp cut-in for the video container
+    gsap.from('.showreel-video', {
+      scrollTrigger: { trigger: container.current, start: 'top 75%' },
+      clipPath: 'inset(100% 0 0 0)',
+      opacity: 0.5,
+      duration: 1.8,
+      ease: 'power4.inOut'
+    });
+
+    gsap.from('.showreel-stats .stat', {
+      scrollTrigger: { trigger: container.current, start: 'top 65%' },
+      opacity: 0,
+      filter: 'blur(4px)',
+      stagger: 0.2,
+      duration: 1.2,
+      ease: 'power2.out'
+    });
+  }, { scope: container });
 
   return (
-    <section id="showreel" className="relative py-28 bg-spider-dark spider-web-bg overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-spider-red/5 blur-[120px] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <p className="text-spider-red text-sm font-semibold uppercase tracking-[0.4em] mb-4">
-            — Watch —
+    <section id="showreel" ref={container} className="relative py-32 bg-[#030303] overflow-hidden">
+      
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="showreel-header text-center mb-20">
+          <p className="text-white/40 text-[10px] font-semibold uppercase tracking-[0.6em] mb-6">
+            — The Reel —
           </p>
-          <h2 className="section-title text-5xl md:text-7xl">
-            MY <span className="text-gradient-red">SHOWREEL</span>
+          <h2 className="section-title text-5xl md:text-7xl tracking-widest text-white/90" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
+            MY SHOWREEL
           </h2>
-          <span className="red-line mx-auto" />
-          <p className="text-gray-400 max-w-xl mx-auto mt-4">
-            A curated collection of my best work — from cinematic storytelling to viral social content.
+          <div className="w-24 h-px bg-white/20 mx-auto my-8" />
+          <p className="text-gray-500 max-w-lg mx-auto text-sm leading-relaxed tracking-wide">
+            A curated collection of visceral, high-contrast visual storytelling.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Video Player */}
-        <motion.div
-          initial={{ opacity: 0, y: 50, scale: 0.95 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9 }}
-          className="relative max-w-5xl mx-auto"
-        >
-          {/* Outer glow border */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-spider-red via-spider-red-dark to-spider-red opacity-40 blur-sm rounded-sm" />
+        <div className="showreel-video relative max-w-5xl mx-auto">
+          {/* Subtle outer glow that looks like a rim light */}
+          <div className="absolute -inset-0.5 bg-white/5 blur-md" />
 
-          <div className="relative bg-spider-black overflow-hidden shadow-red-glow-lg aspect-video rounded-sm border border-spider-red/30">
-            {/* Thumbnail / Play overlay */}
+          <div className="relative bg-black overflow-hidden aspect-video border border-white/10 group">
             {!playing ? (
               <div
-                className="absolute inset-0 z-10 cursor-pointer group"
+                className="absolute inset-0 z-10 cursor-pointer"
                 onClick={() => setPlaying(true)}
               >
-                <img
-                  src={thumbImg}
-                  alt="Showreel Thumbnail"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-spider-black/60 flex items-center justify-center">
-                  <motion.div
-                    whileHover={{ scale: 1.15 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-20 h-20 rounded-full bg-spider-red flex items-center justify-center shadow-red-glow-lg group-hover:shadow-red-glow"
-                    animate={{ boxShadow: ['0 0 20px rgba(255,26,26,0.5)', '0 0 50px rgba(255,26,26,0.9)', '0 0 20px rgba(255,26,26,0.5)'] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <FaPlay className="text-white text-3xl ml-1" />
-                  </motion.div>
+                <img src={thumbImg} alt="Showreel Thumbnail" className="w-full h-full object-cover grayscale contrast-150 brightness-75 group-hover:contrast-125 group-hover:brightness-100 transition-all duration-1000" />
+                
+                {/* Vignette */}
+                <div className="absolute inset-0 bg-radial-gradient from-transparent to-black/80 pointer-events-none" />
+
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-24 h-24 border border-white/30 rounded-full flex items-center justify-center transition-all duration-700 bg-black/40 backdrop-blur-sm group-hover:scale-110 group-hover:bg-white group-hover:border-white group-hover:shadow-[0_0_40px_rgba(255,255,255,0.4)]">
+                    <FaPlay className="text-white group-hover:text-black text-2xl ml-2 transition-colors duration-500" />
+                  </div>
                 </div>
-                {/* Corner decorations */}
-                <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-spider-red" />
-                <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-spider-red" />
-                <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-spider-red" />
-                <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-spider-red" />
+
+                {/* Subtle corner trims */}
+                <div className="absolute top-0 left-0 w-16 h-16 border-t border-l border-white/20 pointer-events-none" />
+                <div className="absolute bottom-0 right-0 w-16 h-16 border-b border-r border-white/20 pointer-events-none" />
               </div>
             ) : (
               <iframe
-                ref={iframeRef}
-                className="w-full h-full absolute inset-0"
-                src="https://www.youtube.com/embed/sJTKp5j-Nd0?si=Bd_VQmxnHr5BVrQ"
+                className="w-full h-full absolute inset-0 z-20"
+                src="https://www.youtube.com/embed/sJTKp5j-Nd0?si=Bd_VQmxnHr5BVrQ&autoplay=1"
                 title="Showreel"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
             )}
           </div>
-        </motion.div>
+        </div>
 
-        {/* Stats below player */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="flex flex-wrap justify-center gap-8 mt-12"
-        >
+        <div className="showreel-stats flex flex-wrap justify-center gap-12 mt-20 border-t border-white/5 pt-12">
           {[
-            { icon: '🎬', label: '250+ Videos Edited' },
-            { icon: '🏆', label: 'Award Winning Work' },
-            { icon: '📱', label: 'Multi-Platform Ready' },
-            { icon: '⚡', label: 'Fast Turnaround' },
+            { label: '250+ Videos Edited' },
+            { label: 'Award Winning Work' },
+            { label: 'Multi-Platform Ready' },
+            { label: 'Fast Turnaround' },
           ].map((item) => (
-            <div key={item.label} className="flex items-center gap-2 text-gray-400 text-sm">
-              <span className="text-lg">{item.icon}</span>
-              <span>{item.label}</span>
+            <div key={item.label} className="stat text-center">
+              <span className="text-gray-500 text-[10px] uppercase tracking-[0.3em] font-semibold">{item.label}</span>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,10 +1,14 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FaChevronLeft, FaChevronRight, FaStar, FaQuoteLeft } from 'react-icons/fa';
 import avatar1 from '../assets/IMG_5194.jpeg';
 import avatar2 from '../assets/IMG_5195.jpeg';
 import avatar3 from '../assets/IMG_5198.jpeg';
 import avatar4 from '../assets/IMG_5199.jpeg';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
   {
@@ -42,121 +46,103 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
+  const container = useRef(null);
+  const slideRef = useRef(null);
   const [current, setCurrent] = useState(0);
 
   const prev = () => setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length);
   const next = () => setCurrent((c) => (c + 1) % testimonials.length);
 
+  useGSAP(() => {
+    gsap.from('.testi-header', {
+      scrollTrigger: { trigger: container.current, start: 'top 80%' },
+      opacity: 0, filter: 'blur(5px)', duration: 1.5, ease: 'power2.out'
+    });
+  }, { scope: container });
+
+  useEffect(() => {
+    // Sharp Noir Cut Transition
+    gsap.fromTo(slideRef.current, 
+      { opacity: 0, clipPath: 'inset(0 100% 0 0)' }, 
+      { opacity: 1, clipPath: 'inset(0 0% 0 0)', duration: 0.8, ease: 'power4.inOut' }
+    );
+  }, [current]);
+
   return (
-    <section id="testimonials" className="relative py-28 bg-spider-black overflow-hidden">
-      {/* BG accent */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-spider-red/5 blur-[120px]" />
-      </div>
-
-      <div className="max-w-5xl mx-auto px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <p className="text-spider-red text-sm font-semibold uppercase tracking-[0.4em] mb-4">
-            — Reviews —
+    <section id="testimonials" ref={container} className="relative py-32 bg-[#050505] overflow-hidden border-t border-white/5">
+      
+      <div className="max-w-5xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="testi-header text-center mb-24">
+          <p className="text-white/40 text-[10px] font-semibold uppercase tracking-[0.6em] mb-4">
+            — Declassified Logs —
           </p>
-          <h2 className="section-title text-5xl md:text-7xl">
-            CLIENT <span className="text-gradient-red">TESTIMONIALS</span>
+          <h2 className="section-title text-5xl md:text-7xl tracking-widest text-white/90" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
+            OPERATIVE REVIEWS
           </h2>
-          <span className="red-line mx-auto" />
-        </motion.div>
+          <div className="w-16 h-px bg-white/20 mx-auto my-8" />
+        </div>
 
-        {/* Slider */}
         <div className="relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current}
-              initial={{ opacity: 0, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -60 }}
-              transition={{ duration: 0.5, ease: 'easeInOut' }}
-              className="relative bg-spider-dark border border-white/5 p-8 md:p-12 rounded-sm hover:border-spider-red/30 transition-colors duration-500"
-              style={{ boxShadow: '0 4px 40px rgba(0,0,0,0.6)' }}
-            >
-              {/* Big quote mark */}
-              <FaQuoteLeft className="absolute top-6 left-6 text-spider-red/10 text-8xl" />
+          <div
+            ref={slideRef}
+            className="relative bg-black border border-white/5 p-10 md:p-16 hover:border-white/20 transition-colors duration-500"
+          >
+            {/* Minimal Corner Accents */}
+            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/10" />
+            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/10" />
 
-              {/* Corner decorations */}
-              <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-spider-red/40" />
-              <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-spider-red/40" />
+            <FaQuoteLeft className="absolute top-8 left-8 text-white/5 text-6xl" />
 
-              {/* Stars */}
-              <div className="flex gap-1 mb-6 relative z-10">
-                {[...Array(testimonials[current].rating)].map((_, i) => (
-                  <FaStar key={i} className="text-spider-red text-sm" />
-                ))}
+            <div className="flex gap-2 mb-8 relative z-10">
+              {[...Array(testimonials[current].rating)].map((_, i) => (
+                <FaStar key={i} className="text-white/80 text-xs" />
+              ))}
+            </div>
+
+            <p className="text-gray-400 text-lg md:text-xl leading-relaxed mb-10 relative z-10 italic">
+              "{testimonials[current].text}"
+            </p>
+
+            <div className="flex items-center gap-5 relative z-10">
+              <img
+                src={testimonials[current].avatar}
+                alt={testimonials[current].name}
+                className="w-12 h-12 grayscale contrast-150 brightness-75 object-cover border border-white/30"
+              />
+              <div>
+                <p className="text-white/90 font-bold text-sm tracking-wider uppercase">{testimonials[current].name}</p>
+                <p className="text-gray-500 text-[10px] uppercase tracking-widest">{testimonials[current].role}</p>
               </div>
+            </div>
+          </div>
 
-              {/* Text */}
-              <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-8 relative z-10 italic">
-                "{testimonials[current].text}"
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-4 relative z-10">
-                <div className="relative">
-                  <img
-                    src={testimonials[current].avatar}
-                    alt={testimonials[current].name}
-                    className="w-14 h-14 rounded-full object-cover border-2 border-spider-red/60"
-                    style={{ boxShadow: '0 0 15px rgba(255,26,26,0.3)' }}
-                  />
-                </div>
-                <div>
-                  <p className="text-white font-bold text-base">{testimonials[current].name}</p>
-                  <p className="text-spider-red text-sm">{testimonials[current].role}</p>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Navigation */}
-          <div className="flex items-center justify-between mt-8">
-            {/* Dots */}
-            <div className="flex gap-2">
+          <div className="flex items-center justify-between mt-8 relative z-10">
+            <div className="flex gap-3">
               {testimonials.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setCurrent(i)}
                   className={`transition-all duration-300 ${i === current
-                    ? 'w-8 h-2 bg-spider-red shadow-red-glow-sm'
-                    : 'w-2 h-2 bg-gray-700 hover:bg-gray-500 rounded-full'
+                    ? 'w-10 h-1 bg-white'
+                    : 'w-4 h-px bg-gray-700 hover:bg-gray-400'
                     }`}
                 />
               ))}
             </div>
 
-            {/* Arrow buttons */}
-            <div className="flex gap-3">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+            <div className="flex gap-4">
+              <button
                 onClick={prev}
-                className="w-12 h-12 border border-gray-700 hover:border-spider-red hover:shadow-red-glow-sm
-                           flex items-center justify-center text-gray-400 hover:text-spider-red transition-all duration-300"
+                className="w-10 h-10 border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:border-white transition-colors bg-[#030303]"
               >
-                <FaChevronLeft />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                <FaChevronLeft className="text-xs" />
+              </button>
+              <button
                 onClick={next}
-                className="w-12 h-12 bg-spider-red border border-spider-red hover:shadow-red-glow
-                           flex items-center justify-center text-white transition-all duration-300"
+                className="w-10 h-10 bg-white text-black flex items-center justify-center hover:bg-gray-300 transition-colors"
               >
-                <FaChevronRight />
-              </motion.button>
+                <FaChevronRight className="text-xs" />
+              </button>
             </div>
           </div>
         </div>

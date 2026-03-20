@@ -1,90 +1,115 @@
-import { motion } from 'framer-motion';
-import { FaFilm, FaMagic, FaBolt, FaLayerGroup, FaVideo, FaInfinity, FaCheck } from 'react-icons/fa';
-import services from '../data/services.json';
+import { useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { FaCut, FaMagic, FaYoutube, FaMobileAlt } from 'react-icons/fa';
 
-const iconMap = {
-  FaFilm, FaMagic, FaBolt, FaLayerGroup, FaVideo, FaInfinity,
-};
+gsap.registerPlugin(ScrollTrigger);
+
+const services = [
+  {
+    icon: FaCut,
+    title: 'CINEMATIC EDITING',
+    desc: 'Transforming raw footage into compelling, high-end narratives with visceral pacing and sharp cuts.',
+    features: ['Narrative Assembly', 'Color Grading', 'Sound Design']
+  },
+  {
+    icon: FaMagic,
+    title: 'VFX & MOTION',
+    desc: 'Enhancing reality through seamless compositing, stark motion graphics, and atmospheric visual effects.',
+    features: ['Compositing', '2D/3D Tracking', 'Title Design']
+  },
+  {
+    icon: FaYoutube,
+    title: 'YOUTUBE CONTENT',
+    desc: 'High-retention edits optimized for the algorithm, combining fast-paced storytelling with cinematic polish.',
+    features: ['A/B Testing Cuts', 'Hook Optimization', 'Pacing']
+  },
+  {
+    icon: FaMobileAlt,
+    title: 'SHORTS & REELS',
+    desc: 'Vertical storytelling designed to capture attention instantly in infinite scroll feeds.',
+    features: ['Viral Formatting', 'Dynamic Captions', 'Trend Adaptation']
+  }
+];
 
 export default function Services() {
+  const container = useRef();
+
+  useGSAP(() => {
+    // Sharp Noir Entrance
+    gsap.from('.services-header', {
+      scrollTrigger: { trigger: container.current, start: 'top 80%' },
+      opacity: 0,
+      y: 30,
+      duration: 1.5,
+      ease: 'power3.out'
+    });
+
+    gsap.fromTo('.service-card', 
+      {
+        opacity: 0,
+        clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)'
+      },
+      {
+        scrollTrigger: { trigger: container.current, start: 'top 75%' },
+        opacity: 1,
+        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+        stagger: 0.15,
+        duration: 1.2,
+        ease: 'power4.inOut'
+      }
+    );
+  }, { scope: container });
+
   return (
-    <section id="services" className="relative py-28 bg-spider-dark spider-web-bg overflow-hidden">
-      {/* BG glow */}
-      <div className="absolute bottom-0 left-1/4 w-[500px] h-[300px] bg-spider-red/5 blur-[100px] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <p className="text-spider-red text-sm font-semibold uppercase tracking-[0.4em] mb-4">
-            — Expertise —
+    <section id="services" ref={container} className="relative py-32 bg-[#030303] overflow-hidden">
+      
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="services-header text-center mb-24">
+          <p className="text-white/40 text-[10px] font-semibold uppercase tracking-[0.6em] mb-6">
+            — Capabilities —
           </p>
-          <h2 className="section-title text-5xl md:text-7xl">
-            MY <span className="text-gradient-red">SERVICES</span>
+          <h2 className="section-title text-5xl md:text-7xl tracking-widest text-white/90" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
+            SERVICES
           </h2>
-          <span className="red-line mx-auto" />
-          <p className="text-gray-400 max-w-xl mx-auto mt-4">
-            Professional video production services tailored to elevate your brand and captivate your audience.
-          </p>
-        </motion.div>
+          <div className="w-24 h-px bg-white/20 mx-auto my-8" />
+        </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, i) => {
-            const Icon = iconMap[service.icon] || FaFilm;
-            return (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                whileHover={{ y: -8 }}
-                className="glass-card p-8 group relative overflow-hidden rounded-sm"
-              >
-                {/* Glow background on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-spider-red/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {services.map((service, index) => (
+            <div
+              key={service.title}
+              className="service-card group relative bg-black border border-white/5 p-8 transition-all duration-500 hover:border-white/30 hover:bg-[#050505]"
+            >
+              {/* Noir shadow/vignette inside card */}
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black pointer-events-none opacity-80" />
 
-                {/* Icon */}
-                <div className="relative mb-6">
-                  <div className="w-14 h-14 bg-spider-red/10 border border-spider-red/30 flex items-center justify-center
-                                  group-hover:bg-spider-red group-hover:shadow-red-glow transition-all duration-400">
-                    <Icon className="text-spider-red text-2xl group-hover:text-white transition-colors duration-300" />
-                  </div>
-                  <span className="absolute -top-2 -right-2 text-spider-red/10 text-7xl font-bold select-none"
-                        style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
+              <div className="relative z-10">
+                <div className="w-12 h-12 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-white transition-colors duration-500">
+                  <service.icon className="text-white group-hover:text-black text-xl transition-colors duration-500" />
                 </div>
 
-                {/* Content */}
-                <h3 className="text-white text-xl font-bold mb-3 group-hover:text-spider-red transition-colors duration-300">
-                  {service.title}
-                </h3>
-                <p className="text-gray-500 text-sm leading-relaxed mb-5">
-                  {service.description}
+                <div className="text-white/20 text-4xl font-bold absolute top-4 right-4 opacity-50 group-hover:opacity-100 transition-opacity" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
+                  0{index + 1}
+                </div>
+
+                <h3 className="text-white font-semibold tracking-wider mb-4 uppercase text-sm">{service.title}</h3>
+                <p className="text-gray-500 text-xs leading-relaxed mb-8 h-20">
+                  {service.desc}
                 </p>
 
-                {/* Features list */}
-                <ul className="space-y-2">
-                  {service.features.map((feat) => (
-                    <li key={feat} className="flex items-center gap-2 text-gray-400 text-sm">
-                      <FaCheck className="text-spider-red text-xs flex-shrink-0" />
-                      {feat}
+                <ul className="space-y-3">
+                  {service.features.map(feature => (
+                    <li key={feature} className="flex items-center gap-3 text-[10px] text-gray-400 uppercase tracking-widest">
+                      <span className="w-4 h-px bg-white/20 group-hover:w-6 transition-all duration-300 group-hover:bg-white" />
+                      {feature}
                     </li>
                   ))}
                 </ul>
-
-                {/* Bottom red line on hover */}
-                <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-spider-red group-hover:w-full transition-all duration-500 shadow-red-glow-sm" />
-              </motion.div>
-            );
-          })}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
