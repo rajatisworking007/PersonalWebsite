@@ -42,7 +42,7 @@ export default function Showreel() {
 
   return (
     <section id="showreel" ref={container} className="relative py-32 bg-[#030303] overflow-hidden">
-      
+
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="showreel-header text-center mb-20">
           <p className="text-white/40 text-[10px] font-semibold uppercase tracking-[0.6em] mb-6">
@@ -68,7 +68,7 @@ export default function Showreel() {
                 onClick={() => setPlaying(true)}
               >
                 <img src={thumbImg} alt="Showreel Thumbnail" className="w-full h-full object-cover grayscale contrast-150 brightness-75 group-hover:contrast-125 group-hover:brightness-100 transition-all duration-1000" />
-                
+
                 {/* Vignette */}
                 <div className="absolute inset-0 bg-radial-gradient from-transparent to-black/80 pointer-events-none" />
 
@@ -97,7 +97,7 @@ export default function Showreel() {
         <div className="showreel-stats flex flex-wrap justify-center gap-12 mt-20 border-t border-white/5 pt-12">
           {[
             { label: '250+ Videos Edited' },
-            { label: 'Award Winning Work' },
+            { label: 'Collage Clubs Work' },
             { label: 'Multi-Platform Ready' },
             { label: 'Fast Turnaround' },
           ].map((item) => (
