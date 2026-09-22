@@ -1,0 +1,220 @@
+/**
+ * EDITING PORTFOLIO VIDEOS DATA FILE
+ * -----------------------------------
+ * Use this file to add, remove, or update videos in your portfolio!
+ * 
+ * HOW TO EDIT:
+ * 1. TO ADD A NEW VIDEO:
+ *    Add a new video object inside the `portfolioVideos` array below.
+ *    Make sure to assign a unique `id`.
+ * 
+ * 2. TO REMOVE A VIDEO:
+ *    Delete the corresponding video object from the `portfolioVideos` array.
+ * 
+ * 3. TO UPDATE A VIDEO:
+ *    Modify the fields (title, category, description, thumbnail, videoUrl, tags, etc.) directly.
+ * 
+ * CATEGORIES SUPPORTED:
+ * 'All', 'YouTube Editing', 'Cinematic Edits', 'Shorts / Reels', 'VFX Edits'
+ */
+
+export const showreelVideo = {
+  title: "MY SHOWREEL",
+  subtitle: "A curated collection of visceral, high-contrast visual storytelling.",
+  thumbnail: "https://res.cloudinary.com/dtcukrzgf/image/upload/v1773838377/IMG_5176_rha888.jpg",
+  videoUrl: "https://www.youtube.com/embed/sJTKp5j-Nd0?si=Bd_VQmxnHr5BVrQ&autoplay=1",
+  stats: [
+    { label: '250+ Videos Edited' },
+    { label: 'Collage Clubs Work' },
+    { label: 'Multi-Platform Ready' },
+    { label: 'Fast Turnaround' },
+  ]
+};
+
+export const portfolioVideos = [
+  {
+    id: 1,
+    title: "Industry Marketing Video",
+    category: "Shorts / Reels",
+    description: "High-octane sports edit showcasing precision footwork, dynamic speed ramping, syncopated sound design, and cinematic stadium colour grading.",
+    thumbnail: "https://res.cloudinary.com/dtcukrzgf/video/upload/v1790076775/IMG_9697_1_enwfo4.jpg",
+    videoUrl: "https://res.cloudinary.com/dtcukrzgf/video/upload/v1790076775/IMG_9697_1_enwfo4.mp4",
+    tags: [
+      "Football",
+      "Sports",
+      "Colour Grading",
+      "Sound Design"
+    ],
+    views: "1.8M",
+    duration: "1:06"
+  },
+  {
+    id: 2,
+    title: "Sneaker Craft — Behind The Brand",
+    category: "Shorts / Reels",
+    description: "Dynamic behind-the-scenes apparel manufacturing reel showcasing material cutting, cinematic colour grading, rapid pacing, and modern kinetic typography.",
+    thumbnail: "https://res.cloudinary.com/dtcukrzgf/video/upload/v1790068960/IMG_0816_nljssy.jpg",
+    videoUrl: "https://res.cloudinary.com/dtcukrzgf/video/upload/v1790068960/IMG_0816_nljssy.mp4",
+    tags: [
+      "Manufacturing",
+      "Colour Grading",
+      "Commercial",
+      "Typography"
+    ],
+    views: "950K",
+    duration: "0:44"
+  },
+  {
+    id: 3,
+    title: "Artisans of the Craft",
+    category: "Shorts / Reels",
+    description: "Warm, human-focused factory documentary short featuring filmic colour grading and celebrating skilled artisans behind athletic footwear manufacturing.",
+    thumbnail: "https://res.cloudinary.com/dtcukrzgf/video/upload/v1790068943/Timeline_1_afdh1q.jpg",
+    videoUrl: "https://res.cloudinary.com/dtcukrzgf/video/upload/v1790068943/Timeline_1_afdh1q.mp4",
+    tags: [
+      "Documentary",
+      "Colour Grading",
+      "Story",
+      "Cinematic"
+    ],
+    views: "1.2M",
+    duration: "0:25"
+  },
+  {
+    id: 4,
+    title: "Screen Print Kinetic Promo",
+    category: "Shorts / Reels",
+    description: "Industrial screen printing process promo highlighting rich colour grading, tactile ink textures, rhythmic sound effects, and punchy editorial typography.",
+    thumbnail: "https://res.cloudinary.com/dtcukrzgf/video/upload/v1790068930/0821_2_ktiyyk.jpg",
+    videoUrl: "https://res.cloudinary.com/dtcukrzgf/video/upload/v1790068930/0821_2_ktiyyk.mp4",
+    tags: [
+      "Screen Printing",
+      "Colour Grading",
+      "Branding",
+      "Sound Design"
+    ],
+    views: "1.5M",
+    duration: "0:38"
+  },
+  {
+    id: 5,
+    title: "Cinemaic Mountain",
+    category: "Cinematic Edits",
+    description: "A cinematic mountain exploration piece blending day videography with dynamic angle.",
+    thumbnail: "https://res.cloudinary.com/dtcukrzgf/image/upload/v1773838377/IMG_5176_rha888.jpg",
+    videoUrl: "https://www.youtube.com/embed/YGUWZj1wS5A?si=a6_1x_LWsI4NCytP",
+    tags: [
+      "Cinematic",
+      "4K",
+      "Color Grade"
+    ],
+    views: "2.3M",
+    duration: "3:45"
+  },
+  {
+    id: 6,
+    title: "Smooth CutOut EDIT",
+    category: "YouTube Editing",
+    description: "High-energy YouTube video with rapid cuts, sound design and custom motion graphics.",
+    thumbnail: "https://res.cloudinary.com/dtcukrzgf/image/upload/v1773838397/Screenshot_2026-03-16_at_3.41.38_PM_e5vvte.png",
+    videoUrl: "https://www.youtube.com/embed/paj4DtTSrKE?si=i5jcmSWnh0dBOgkt",
+    tags: [
+      "YouTube",
+      "Fast Cuts",
+      "Motion Graphics"
+    ],
+    views: "10k",
+    duration: "00:10"
+  },
+  {
+    id: 7,
+    title: "Frame Zero",
+    category: "Shorts / Reels",
+    description: "Viral short-form content with punchy edits optimized for Instagram Reels and YouTube Shorts.",
+    thumbnail: "https://res.cloudinary.com/dtcukrzgf/image/upload/v1773838377/IMG_5177_hlardn.jpg",
+    videoUrl: "https://www.youtube.com/embed/s-5GqerIiYI?si=ihpa5lEXGRTUB4zy",
+    tags: [
+      "Reels",
+      "Trending",
+      "Viral"
+    ],
+    views: "5.1M",
+    duration: "0:58"
+  },
+  {
+    id: 8,
+    title: "Fast Effect",
+    category: "VFX Edits",
+    description: "Sci-fi inspired VFX compositing with particle effects, lens flares and 3D integration.",
+    thumbnail: "https://res.cloudinary.com/dtcukrzgf/image/upload/v1773838397/Screenshot_2026-03-16_at_3.41.38_PM_e5vvte.png",
+    videoUrl: "https://www.youtube.com/embed/sJTKp5j-Nd0?si=Bd_VQmxnHr5BVrQ",
+    tags: [
+      "VFX",
+      "Compositing",
+      "Sci-Fi"
+    ],
+    views: "890K",
+    duration: "5:12"
+  },
+  {
+    id: 9,
+    title: "Vlog Edit",
+    category: "YouTube Editing",
+    description: "Personal vlog shoot video for a Vloger featuring fast cuts , slomo and transitions.",
+    thumbnail: "https://res.cloudinary.com/dtcukrzgf/image/upload/v1773814738/Screenshot_2026-03-16_at_3.57.42_PM_cq5r2a.png",
+    videoUrl: "https://www.youtube.com/embed/0bKgsGT6P5s?si=WVT0rAQ_w877Pu9x",
+    tags: [
+      "Brand",
+      "Commercial",
+      "Luxury"
+    ],
+    views: "3.2M",
+    duration: "4:33"
+  },
+  {
+    id: 10,
+    title: "University Fest AfterMovie",
+    category: "Cinematic Edits",
+    description: "TO capture the whole event and convert it into a memorial movie.",
+    thumbnail: "https://res.cloudinary.com/dtcukrzgf/image/upload/v1778752632/IMG_6599_pzwpyj.heic",
+    videoUrl: "https://www.youtube.com/embed/wChlaYyBfcw?si=QMdrUUBuQw3SUeHQ",
+    tags: [
+      "Action",
+      "VFX",
+      "Superhero"
+    ],
+    views: "4.7M",
+    duration: "6:45"
+  },
+  {
+    id: 11,
+    title: "Collage Club Works",
+    category: "YouTube Editing",
+    description: "Explanation documentry Type edits",
+    thumbnail: "https://res.cloudinary.com/dtcukrzgf/image/upload/v1778754375/Screenshot_2026-05-14_at_3.50.16_PM_okqkok.png",
+    videoUrl: "https://res.cloudinary.com/dtcukrzgf/video/upload/v1778753768/0514_1_g2jcpi.mp4",
+    tags: [
+      "Travel",
+      "Cinematic",
+      "Nature"
+    ],
+    views: "3:20"
+  },
+  {
+    id: 12,
+    title: "Micro Story",
+    category: "Shorts / Reels",
+    description: "Storytelling through 60-second micro-documentaries with cinematic authenticity.",
+    thumbnail: "https://res.cloudinary.com/dtcukrzgf/image/upload/v1778755206/Screenshot_2026-05-14_at_4.08.40_PM_aoxbjf.png",
+    videoUrl: "https://res.cloudinary.com/dtcukrzgf/video/upload/v1778755201/0331_1_mmmol6.mov",
+    tags: [
+      "Shorts",
+      "Story",
+      "Mini-Doc"
+    ],
+    views: "2.6M",
+    duration: "1:00"
+  }
+];
+
+export default portfolioVideos;

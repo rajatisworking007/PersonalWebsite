@@ -27,9 +27,9 @@ export default function Contact() {
     gsap.from('.contact-element', {
       scrollTrigger: { trigger: container.current, start: 'top 80%' },
       opacity: 0,
-      y: 20,
-      stagger: 0.15,
-      duration: 1.2,
+      y: 25,
+      stagger: 0.12,
+      duration: 1,
       ease: 'power3.out'
     });
   }, { scope: container });
@@ -47,13 +47,13 @@ export default function Contact() {
     emailjs
       .sendForm(serviceId, templateId, formRef.current, publicKey)
       .then(
-        (result) => {
+        () => {
           setLoading(false);
           setSent(true);
           setForm({ name: '', email: '', subject: '', message: '' });
           setTimeout(() => setSent(false), 5000);
         },
-        (error) => {
+        () => {
           setLoading(false);
           setError(true);
           setTimeout(() => setError(false), 5000);
@@ -62,142 +62,162 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" ref={container} className="relative py-32 bg-[#030303] border-t border-white/5 overflow-hidden">
+    <section id="contact" ref={container} className="relative py-32 section-bg-primary overflow-hidden section-contained" style={{ borderTop: '1px solid var(--border-subtle)' }}>
+      {/* Ambient glow */}
+      <div className="ambient-glow red absolute top-0 right-0" />
+      <div className="ambient-glow violet absolute bottom-0 left-0" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="contact-element text-center mb-20 relative z-10">
-          <p className="text-white/40 text-[10px] font-semibold uppercase tracking-[0.6em] mb-4">
-            — Dispatch —
+          <p className="section-label">
+            — Contact —
           </p>
-          <h2 className="section-title text-5xl md:text-7xl tracking-widest text-white/90">
-            TRANSMIT SECURELY
+          <h2 className="section-title text-5xl md:text-7xl tracking-widest">
+            LET'S <span className="text-gradient-red">COLLABORATE</span>
           </h2>
-          <div className="w-16 h-px bg-white/20 mx-auto my-8" />
-          <p className="text-gray-500 max-w-xl mx-auto text-sm tracking-wide">
-            Ready to initiate a project? Send your dossier. Silence is the only alternative.
+          <div className="section-divider" />
+          <p className="max-w-xl mx-auto text-sm tracking-wide" style={{ color: 'var(--text-secondary)' }}>
+            Ready to bring your vision to life? Let's create something extraordinary together.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 relative z-10">
-          {/* Left: contact info (Noir Minimalist) */}
+          {/* Left: contact info */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="contact-element p-6 border border-white/5 bg-black hover:border-white/20 transition-colors flex items-center gap-5">
-              <FaEnvelope className="text-white/50 text-xl" />
+            <div className="contact-element p-6 rounded-sm flex items-center gap-5 transition-all duration-300 hover:translate-y-[-2px]" style={{ border: '1px solid var(--border-subtle)', background: 'var(--bg-secondary)' }}>
+              <FaEnvelope className="text-xl" style={{ color: 'var(--accent-primary)' }} />
               <div>
-                <p className="text-white/40 text-[9px] uppercase tracking-widest mb-1">Comm-Link (Email)</p>
-                <a href="mailto:rajatisworking007@gmail.com" className="text-white text-sm hover:text-gray-300 transition-colors">
+                <p className="text-[9px] uppercase tracking-widest mb-1" style={{ color: 'var(--accent-primary)', opacity: 0.7 }}>Email</p>
+                <a href="mailto:rajatisworking007@gmail.com" className="text-sm hover:opacity-80 transition-colors" style={{ color: 'var(--text-primary)' }}>
                   rajatisworking007@gmail.com
                 </a>
               </div>
             </div>
 
-            <div className="contact-element p-6 border border-white/5 bg-black hover:border-white/20 transition-colors flex items-center gap-5">
-              <FaWhatsapp className="text-white/50 text-xl" />
+            <div className="contact-element p-6 rounded-sm flex items-center gap-5 transition-all duration-300 hover:translate-y-[-2px]" style={{ border: '1px solid var(--border-subtle)', background: 'var(--bg-secondary)' }}>
+              <FaWhatsapp className="text-xl" style={{ color: 'var(--accent-primary)' }} />
               <div>
-                <p className="text-white/40 text-[9px] uppercase tracking-widest mb-1">Direct Line (WhatsApp)</p>
-                <a href="https://wa.me/918305618020" className="text-white text-sm hover:text-gray-300 transition-colors">
+                <p className="text-[9px] uppercase tracking-widest mb-1" style={{ color: 'var(--accent-primary)', opacity: 0.7 }}>WhatsApp</p>
+                <a href="https://wa.me/918305618020" className="text-sm hover:opacity-80 transition-colors" style={{ color: 'var(--text-primary)' }}>
                   +918305618020
                 </a>
               </div>
             </div>
 
-            <div className="contact-element p-6 bg-[#050505] border-l-2 border-white/30">
+            <div className="contact-element p-6 rounded-sm" style={{ background: 'var(--bg-secondary)', borderLeft: '2px solid var(--accent-primary)' }}>
               <div className="flex items-center gap-3 mb-3">
-                <span className="w-2 h-2 bg-white rounded-full animate-pulse blur-[1px]" />
-                <span className="text-white text-[10px] uppercase tracking-widest">Status: Active</span>
+                <span className="w-2 h-2 rounded-full animate-pulse-red" style={{ background: 'var(--accent-primary)', boxShadow: '0 0 8px rgba(230,57,70,0.6)' }} />
+                <span className="text-[10px] uppercase tracking-widest" style={{ color: 'var(--text-primary)' }}>Status: Available</span>
               </div>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                Accepting highly classified edits for Q2. Encrypted transmission acknowledged within 24 standard hours.
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                Currently accepting new projects. Expect a response within 24 hours.
               </p>
             </div>
 
             <div className="contact-element pt-4">
-              <p className="text-white/40 text-[9px] uppercase tracking-widest mb-4">Known Aliases (Socials)</p>
-              <div className="flex gap-3">
+              <p className="text-[9px] uppercase tracking-widest mb-4" style={{ color: 'var(--accent-primary)', opacity: 0.7 }}>Connect on Social</p>
+              <div className="flex flex-wrap gap-4 mt-2">
                 {socials.map((social) => (
                   <a
                     key={social.label}
                     href={social.href}
-                    className="w-10 h-10 border border-white/10 flex items-center justify-center text-gray-500 hover:bg-white hover:text-black hover:border-white transition-all duration-300"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative w-12 h-12 flex items-center justify-center rounded-sm transition-all duration-500 hover:-translate-y-2"
+                    style={{ 
+                      border: '1px solid var(--border-subtle)', 
+                      color: 'var(--text-muted)', 
+                      background: 'var(--bg-secondary)' 
+                    }}
                     aria-label={social.label}
                   >
-                    <social.icon className="text-sm" />
+                    {/* Hover Glow Background */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-sm"
+                         style={{ background: 'var(--glow-primary)', boxShadow: '0 0 25px rgba(230,57,70,0.5)' }} />
+                    {/* Icon */}
+                    <social.icon className="text-lg relative z-10 transition-colors duration-500 group-hover:text-[#E63946]" />
                   </a>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Right: form (Noir Sharp Borders) */}
+          {/* Right: form */}
           <div className="lg:col-span-3">
-            <form ref={formRef} onSubmit={handleSubmit} className="contact-element bg-black p-8 md:p-10 border border-white/5 relative">
+            <form ref={formRef} onSubmit={handleSubmit} className="contact-element p-8 md:p-10 relative rounded-sm" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)' }}>
               {/* Corner accents */}
-              <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-white/40" />
-              <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-white/40" />
+              <div className="absolute top-0 left-0 w-4 h-4 border-t border-l" style={{ borderColor: 'rgba(230,57,70,0.3)' }} />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r" style={{ borderColor: 'rgba(230,57,70,0.3)' }} />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label className="block text-white/40 text-[10px] uppercase tracking-widest mb-2">Subject Name</label>
+                  <label className="block text-[10px] uppercase tracking-widest mb-2" style={{ color: 'var(--accent-primary)', opacity: 0.7 }}>Your Name</label>
                   <input
                     type="text"
                     name="name"
                     value={form.name}
                     onChange={handleChange}
                     required
-                    className="w-full bg-[#050505] border border-white/10 focus:border-white/50 text-white text-sm px-4 py-3 outline-none transition-colors placeholder-white/10"
-                    placeholder="rajat"
+                    className="w-full text-sm px-4 py-3 outline-none transition-colors rounded-sm"
+                    style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}
+                    placeholder="Rajat"
                   />
                 </div>
                 <div>
-                  <label className="block text-white/40 text-[10px] uppercase tracking-widest mb-2">Return Coordinates (Email)</label>
+                  <label className="block text-[10px] uppercase tracking-widest mb-2" style={{ color: 'var(--accent-primary)', opacity: 0.7 }}>Email Address</label>
                   <input
                     type="email"
                     name="email"
                     value={form.email}
                     onChange={handleChange}
                     required
-                    className="w-full bg-[#050505] border border-white/10 focus:border-white/50 text-white text-sm px-4 py-3 outline-none transition-colors placeholder-white/10"
-                    placeholder="Rajatisworking007@gmail.com"
+                    className="w-full text-sm px-4 py-3 outline-none transition-colors rounded-sm"
+                    style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}
+                    placeholder="your@email.com"
                   />
                 </div>
               </div>
 
               <div className="mb-6">
-                <label className="block text-white/40 text-[10px] uppercase tracking-widest mb-2">Objective (Subject)</label>
+                <label className="block text-[10px] uppercase tracking-widest mb-2" style={{ color: 'var(--accent-primary)', opacity: 0.7 }}>Subject</label>
                 <input
                   type="text"
                   name="subject"
                   value={form.subject}
                   onChange={handleChange}
                   required
-                  className="w-full bg-[#050505] border border-white/10 focus:border-white/50 text-white text-sm px-4 py-3 outline-none transition-colors placeholder-white/10"
-                  placeholder="Classified Editing Operation"
+                  className="w-full text-sm px-4 py-3 outline-none transition-colors rounded-sm"
+                  style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}
+                  placeholder="Video Editing Project"
                 />
               </div>
 
               <div className="mb-8">
-                <label className="block text-white/40 text-[10px] uppercase tracking-widest mb-2">Intel (Message)</label>
+                <label className="block text-[10px] uppercase tracking-widest mb-2" style={{ color: 'var(--accent-primary)', opacity: 0.7 }}>Message</label>
                 <textarea
                   name="message"
                   value={form.message}
                   onChange={handleChange}
                   rows={5}
                   required
-                  className="w-full bg-[#050505] border border-white/10 focus:border-white/50 text-white text-sm px-4 py-3 outline-none transition-colors placeholder-white/10 resize-none"
-                  placeholder="Provide parameters..."
+                  className="w-full text-sm px-4 py-3 outline-none transition-colors resize-none rounded-sm"
+                  style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}
+                  placeholder="Tell me about your project..."
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-white text-black font-semibold uppercase tracking-widest text-xs py-4 hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-wait"
+                className="btn-primary w-full font-semibold uppercase tracking-widest text-xs py-4 rounded-sm disabled:opacity-50 disabled:cursor-wait"
               >
-                {loading ? 'Transmitting...' : sent ? 'Transmission Confirmed' : 'Initiate Transfer'}
+                <span className="relative z-10">
+                  {loading ? 'Sending...' : sent ? '✓ Message Sent!' : 'Send Message'}
+                </span>
               </button>
               {error && (
-                <p className="text-red-900 border border-red-900 bg-red-900/10 p-3 text-xs text-center mt-4 tracking-widest uppercase">
-                  Comms Failed. Retry.
+                <p className="p-3 text-xs text-center mt-4 tracking-widest uppercase rounded-sm" style={{ color: 'var(--accent-crimson)', border: '1px solid var(--accent-crimson)', background: 'rgba(201,53,69,0.08)' }}>
+                  Failed to send. Please try again.
                 </p>
               )}
             </form>

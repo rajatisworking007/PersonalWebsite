@@ -56,50 +56,52 @@ export default function Testimonials() {
   useGSAP(() => {
     gsap.from('.testi-header', {
       scrollTrigger: { trigger: container.current, start: 'top 80%' },
-      opacity: 0, filter: 'blur(5px)', duration: 1.5, ease: 'power2.out'
+      opacity: 0, y: 25, duration: 1.2, ease: 'power2.out'
     });
   }, { scope: container });
 
   useEffect(() => {
-    // Sharp Noir Cut Transition
     gsap.fromTo(slideRef.current, 
-      { opacity: 0, clipPath: 'inset(0 100% 0 0)' }, 
-      { opacity: 1, clipPath: 'inset(0 0% 0 0)', duration: 0.8, ease: 'power4.inOut' }
+      { opacity: 0, x: 20 }, 
+      { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }
     );
   }, [current]);
 
   return (
-    <section id="testimonials" ref={container} className="relative py-32 bg-[#050505] overflow-hidden border-t border-white/5">
+    <section id="testimonials" ref={container} className="relative py-32 section-bg-secondary overflow-hidden section-contained" style={{ borderTop: '1px solid var(--border-subtle)' }}>
+      {/* Ambient glow */}
+      <div className="ambient-glow red absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
       
       <div className="max-w-5xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="testi-header text-center mb-24">
-          <p className="text-white/40 text-[10px] font-semibold uppercase tracking-[0.6em] mb-4">
-            — Declassified Logs —
+          <p className="section-label">
+            — Client Reviews —
           </p>
-          <h2 className="section-title text-5xl md:text-7xl tracking-widest text-white/90" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
-            OPERATIVE REVIEWS
+          <h2 className="section-title text-5xl md:text-7xl tracking-widest" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
+            TESTI<span className="text-gradient-red">MONIALS</span>
           </h2>
-          <div className="w-16 h-px bg-white/20 mx-auto my-8" />
+          <div className="section-divider" />
         </div>
 
         <div className="relative">
           <div
             ref={slideRef}
-            className="relative bg-black border border-white/5 p-10 md:p-16 hover:border-white/20 transition-colors duration-500"
+            className="relative p-10 md:p-16 rounded-sm transition-colors duration-500"
+            style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-subtle)' }}
           >
-            {/* Minimal Corner Accents */}
-            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/10" />
-            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/10" />
+            {/* Corner Accents */}
+            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2" style={{ borderColor: 'rgba(230,57,70,0.25)' }} />
+            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2" style={{ borderColor: 'rgba(230,57,70,0.25)' }} />
 
-            <FaQuoteLeft className="absolute top-8 left-8 text-white/5 text-6xl" />
+            <FaQuoteLeft className="absolute top-8 left-8 text-6xl" style={{ color: 'var(--border-subtle)' }} />
 
             <div className="flex gap-2 mb-8 relative z-10">
               {[...Array(testimonials[current].rating)].map((_, i) => (
-                <FaStar key={i} className="text-white/80 text-xs" />
+                <FaStar key={i} className="text-xs" style={{ color: 'var(--accent-primary)' }} />
               ))}
             </div>
 
-            <p className="text-gray-400 text-lg md:text-xl leading-relaxed mb-10 relative z-10 italic">
+            <p className="text-lg md:text-xl leading-relaxed mb-10 relative z-10 italic" style={{ color: 'var(--text-secondary)', fontFamily: 'Playfair Display, serif' }}>
               "{testimonials[current].text}"
             </p>
 
@@ -107,11 +109,14 @@ export default function Testimonials() {
               <img
                 src={testimonials[current].avatar}
                 alt={testimonials[current].name}
-                className="w-12 h-12 grayscale contrast-150 brightness-75 object-cover border border-white/30"
+                loading="lazy"
+                decoding="async"
+                className="w-12 h-12 object-cover rounded-sm brightness-90"
+                style={{ border: '1px solid var(--border-accent)' }}
               />
               <div>
-                <p className="text-white/90 font-bold text-sm tracking-wider uppercase">{testimonials[current].name}</p>
-                <p className="text-gray-500 text-[10px] uppercase tracking-widest">{testimonials[current].role}</p>
+                <p className="font-bold text-sm tracking-wider uppercase" style={{ color: 'var(--text-primary)' }}>{testimonials[current].name}</p>
+                <p className="text-[10px] uppercase tracking-widest" style={{ color: 'var(--accent-primary)' }}>{testimonials[current].role}</p>
               </div>
             </div>
           </div>
@@ -122,10 +127,13 @@ export default function Testimonials() {
                 <button
                   key={i}
                   onClick={() => setCurrent(i)}
-                  className={`transition-all duration-300 ${i === current
-                    ? 'w-10 h-1 bg-white'
-                    : 'w-4 h-px bg-gray-700 hover:bg-gray-400'
-                    }`}
+                  className="transition-all duration-300 rounded-full"
+                  style={{
+                    width: i === current ? '40px' : '16px',
+                    height: i === current ? '4px' : '2px',
+                    background: i === current ? 'var(--accent-primary)' : 'var(--text-muted)',
+                    boxShadow: i === current ? '0 0 8px rgba(230,57,70,0.4)' : 'none'
+                  }}
                 />
               ))}
             </div>
@@ -133,13 +141,15 @@ export default function Testimonials() {
             <div className="flex gap-4">
               <button
                 onClick={prev}
-                className="w-10 h-10 border border-white/10 flex items-center justify-center text-gray-500 hover:text-white hover:border-white transition-colors bg-[#030303]"
+                className="w-10 h-10 flex items-center justify-center rounded-sm transition-all duration-300 hover:translate-y-[-2px]"
+                style={{ border: '1px solid var(--border-subtle)', color: 'var(--text-muted)', background: 'var(--bg-primary)' }}
               >
                 <FaChevronLeft className="text-xs" />
               </button>
               <button
                 onClick={next}
-                className="w-10 h-10 bg-white text-black flex items-center justify-center hover:bg-gray-300 transition-colors"
+                className="w-10 h-10 flex items-center justify-center rounded-sm transition-all duration-300 hover:translate-y-[-2px]"
+                style={{ background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-warm))', color: '#ffffff' }}
               >
                 <FaChevronRight className="text-xs" />
               </button>

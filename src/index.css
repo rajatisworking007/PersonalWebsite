@@ -1,207 +1,462 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   CSS CUSTOM PROPERTIES — CINEMATIC RED
+   ============================================ */
+:root {
+  /* Solid Deep Black Night Mode */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #0e0e12;
+  --bg-surface: #14141c;
+  --bg-card: #181824;
+  --text-primary: #ffffff;
+  --text-secondary: #e5e7eb;
+  --text-muted: #9ca3af;
+  --accent-primary: #ef4444;
+  --accent-secondary: #ff3b30;
+  --accent-warm: #ff4d5a;
+  --accent-deep: #b91c1c;
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-accent: rgba(239, 68, 68, 0.35);
+  --glow-primary: rgba(239, 68, 68, 0.25);
+  --glow-secondary: rgba(255, 59, 48, 0.15);
+  --gradient-hero: linear-gradient(135deg, #0a0a0a 0%, #0d0d12 40%, #150a10 100%);
+  --shadow-card: 0 8px 32px rgba(0,0,0,0.6);
+}
+
+.day-mode {
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #f1f3f5;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
+  --accent-primary: #dc2626;
+  --accent-secondary: #ef4444;
+  --accent-warm: #f87171;
+  --accent-deep: #991b1b;
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-accent: rgba(220, 38, 38, 0.25);
+  --glow-primary: rgba(220, 38, 38, 0.1);
+  --glow-secondary: rgba(239, 68, 68, 0.08);
+  --gradient-hero: linear-gradient(135deg, #f8f9fa 0%, #f1f3f5 50%, #f8f9fa 100%);
+  --shadow-card: 0 4px 16px rgba(0,0,0,0.06);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
-    font-size: 85%; /* Scales down all rem-based sizing globally by 15% */
+    font-size: 85%;
   }
   
   body {
-    background-color: #030303; /* Pitch black */
-    color: #e5e5e5; /* Muted white / silver */
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     font-family: 'Inter', system-ui, sans-serif;
     overflow-x: hidden;
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
 
-  /* Cinematic Vignette */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 9998;
-    pointer-events: none;
-    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.9) 130%);
-  }
-
-  /* Film Grain */
+  /* Subtle Film Grain Texture (non-dimming) */
   body::after {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: 9999;
+    z-index: 10;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.04; /* Very subtle grain */
-    mix-blend-mode: overlay;
+    opacity: 0.015;
+    transform: translateZ(0);
   }
 
   * {
     box-sizing: border-box;
   }
+
+  /* Scrollbar — red accent */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--accent-primary);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-warm);
+  }
+
+  /* Project Index Scrollable List */
+  .project-index-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #e50914 rgba(255, 255, 255, 0.08);
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .project-index-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  .project-index-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 9999px;
+  }
+  .project-index-scroll::-webkit-scrollbar-thumb {
+    background: #e50914;
+    border-radius: 9999px;
+  }
+  .project-index-scroll::-webkit-scrollbar-thumb:hover {
+    background: #ff2d3b;
+  }
 }
 
 @layer components {
   .section-title {
-    @apply text-4xl md:text-6xl font-bold text-white tracking-wider uppercase;
+    @apply text-4xl md:text-6xl font-bold tracking-wider uppercase;
     font-family: 'Bebas Neue', Impact, sans-serif;
+    color: var(--text-primary);
+    transition: color 0.5s ease;
   }
   
-  .red-accent {
-    @apply text-spider-red;
+  .section-label {
+    color: var(--accent-primary);
+    @apply text-[10px] font-semibold uppercase tracking-[0.6em] mb-4;
+  }
+
+  .section-divider {
+    @apply w-24 h-px mx-auto my-8;
+    background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
   }
 
   .btn-primary {
-    @apply relative px-8 py-3 bg-white text-black font-semibold uppercase tracking-widest text-sm
-           transition-all duration-300 cursor-pointer border border-white;
+    @apply relative px-8 py-3 font-semibold uppercase tracking-widest text-sm
+           transition-all duration-500 cursor-pointer overflow-hidden;
+    background: linear-gradient(135deg, #e63946 0%, #c9222f 100%);
+    color: #ffffff;
+    border: 1px solid rgba(230, 57, 70, 0.5);
+  }
+
+  .btn-primary {
+    @apply relative px-8 py-3 font-bold uppercase tracking-widest text-xs
+           transition-all duration-300 cursor-pointer overflow-hidden rounded-full;
+    background: #e50914;
+    color: #ffffff;
+    border: 1px solid rgba(229, 9, 20, 0.6);
   }
 
   .btn-primary:hover {
-    @apply shadow-red-glow bg-gray-200 border-gray-200;
+    background: #dc2626;
+    box-shadow: 0 0 25px rgba(229, 9, 20, 0.5);
+    transform: scale(1.05);
+  }
+
+  .btn-primary span,
+  .btn-primary svg {
+    position: relative;
+    z-index: 1;
   }
 
   .btn-outline {
-    @apply relative px-8 py-3 bg-transparent text-white font-semibold uppercase tracking-widest text-sm
-           transition-all duration-300 cursor-pointer border border-white;
+    @apply relative px-8 py-3 font-semibold uppercase tracking-widest text-xs
+           transition-all duration-300 cursor-pointer rounded-full;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(156, 163, 175, 0.6);
   }
 
   .btn-outline:hover {
-    @apply shadow-red-glow bg-white/10 text-white;
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #ffffff;
+    color: #ffffff;
+    transform: scale(1.05);
   }
 
   .glass-card {
-    @apply bg-spider-dark/80 backdrop-blur-sm border border-white/5 
-           transition-all duration-500;
+    background: rgba(18, 18, 24, 0.95);
+    border: 1px solid var(--border-subtle);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   .glass-card:hover {
-    @apply border-white/50 shadow-red-glow;
+    border-color: var(--border-accent);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 15px var(--glow-primary);
   }
 
-  .glow-text {
-    /* Muted stealthy inner glow rather than bouncing light */
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2), 0 0 20px rgba(255, 255, 255, 0.1);
+  .day-mode .glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .day-mode .glass-card:hover {
+    border-color: rgba(220, 38, 38, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   }
 }
 
 @layer utilities {
   .text-gradient-red {
-    background: linear-gradient(135deg, #ffffff, #a3a3a3);
+    background: linear-gradient(135deg, #ff3b30, #ef4444, #ff5757);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 16px rgba(239, 68, 68, 0.45));
+  }
+
+  .text-gradient-violet {
+    background: linear-gradient(135deg, #8b5cf6, #c084fc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .border-red-glow {
-    border-color: #ffffff;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.05);
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
 
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 4px;
-  }
-  
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: #111111;
-  }
-  
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: #ffffff;
-    border-radius: 2px;
+  /* DOM Containment for 60-120fps scrolling */
+  .section-contained {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 700px;
   }
 }
 
-/* Spider web pattern overlay (now monochrome) */
-.spider-web-bg {
-  background-image: 
-    radial-gradient(ellipse at 20% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(255, 255, 255, 0.015) 0%, transparent 50%);
-}
-
-/* Scanline effect */
-.scanlines::before {
-  content: '';
+/* ============================================
+   AMBIENT BACKGROUND EFFECTS (Zero-cost GPU gradient falloff)
+   ============================================ */
+.ambient-glow {
   position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.15) 2px,
-    rgba(0, 0, 0, 0.15) 4px
-  );
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
   pointer-events: none;
-  z-index: 1;
+  opacity: 0.3;
+  mix-blend-mode: screen;
+  transition: opacity 0.5s ease;
 }
 
-/* Video overlay gradient */
-.video-overlay {
-  background: linear-gradient(
-    to bottom,
-    rgba(10, 10, 10, 0.3) 0%,
-    rgba(10, 10, 10, 0.1) 30%,
-    rgba(10, 10, 10, 0.7) 70%,
-    rgba(10, 10, 10, 1) 100%
-  );
+.ambient-glow.red {
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.35) 0%, rgba(239, 68, 68, 0.12) 35%, transparent 65%);
 }
 
-/* Custom clip path for hero */
-.clip-diagonal {
-  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+.ambient-glow.crimson {
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.3) 0%, rgba(220, 38, 38, 0.1) 35%, transparent 65%);
 }
 
-/* Red line decoration */
-.red-line {
-  @apply w-16 h-1 bg-white block my-4;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+.ambient-glow.violet {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.08) 35%, transparent 65%);
 }
 
-/* Skill bar fill animation */
-.skill-fill {
-  background: linear-gradient(90deg, #a3a3a3, #ffffff, #e5e5e5);
-  background-size: 200% 100%;
-  animation: shimmer 2s linear infinite;
+.day-mode .ambient-glow {
+  opacity: 0.06;
 }
 
-/* Modal backdrop */
+/* ============================================
+   SECTION BACKGROUNDS
+   ============================================ */
+.section-bg-primary {
+  background-color: var(--bg-primary);
+  transition: background-color 0.5s ease;
+}
+
+.section-bg-secondary {
+  background-color: var(--bg-secondary);
+  transition: background-color 0.5s ease;
+}
+
+.section-bg-surface {
+  background-color: var(--bg-surface);
+  transition: background-color 0.5s ease;
+}
+
+/* ============================================
+   MODAL STYLES (Performance optimized without blur)
+   ============================================ */
 .modal-backdrop {
-  backdrop-filter: blur(12px);
-  background: rgba(10, 10, 10, 0.92);
+  background: rgba(5, 5, 10, 0.95);
 }
 
-/* Testimonial quote */
-.quote-mark {
-  font-family: 'Bebas Neue', Impact, sans-serif;
-  font-size: 8rem;
-  line-height: 0.6;
-  color: rgba(255, 255, 255, 0.1);
+.day-mode .modal-backdrop {
+  background: rgba(245, 243, 240, 0.96);
 }
 
-/* Navbar active indicator */
-.nav-active-line {
-  @apply absolute bottom-0 left-0 w-full h-0.5 bg-white;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+/* ============================================
+   SELECTIVE GPU LAYER PROMOTION
+   ============================================ */
+nav, .video-bg {
+  transform: translateZ(0);
+  will-change: transform;
 }
 
-/* Tag styles */
-.tag {
-  @apply inline-flex items-center px-3 py-1 text-xs font-semibold uppercase tracking-wider
-         bg-white/10 text-white border border-white/30;
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-/* Category filter button */
-.filter-btn {
-  @apply px-4 py-2 text-sm font-semibold uppercase tracking-wider border transition-all duration-300;
+/* ============================================
+   DAY MODE OVERRIDES — COMPREHENSIVE
+   ============================================ */
+body.day-mode {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
 }
 
-.filter-btn.active {
-  @apply bg-white text-black border-white;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+/* --- Vignette & grain off in day mode --- */
+body.day-mode::before {
+  background: none !important;
+  opacity: 0 !important;
 }
 
-.filter-btn:not(.active) {
-  @apply bg-transparent text-gray-400 border-gray-700 hover:border-white hover:text-white;
+body.day-mode::after {
+  opacity: 0 !important;
 }
+
+/* --- Text color overrides --- */
+body.day-mode .text-white,
+body.day-mode .text-white\/90,
+body.day-mode .text-white\/80,
+body.day-mode .text-white\/70 {
+  color: var(--text-primary) !important;
+}
+
+body.day-mode .text-white\/60,
+body.day-mode .text-white\/50,
+body.day-mode .text-white\/40,
+body.day-mode .text-white\/30,
+body.day-mode .text-white\/20 {
+  color: var(--text-secondary) !important;
+}
+
+/* --- Border overrides --- */
+body.day-mode .border-white\/5,
+body.day-mode .border-white\/10,
+body.day-mode .border-white\/20 {
+  border-color: rgba(26, 21, 32, 0.1) !important;
+}
+
+/* --- Section backgrounds --- */
+body.day-mode .section-bg-primary {
+  background-color: var(--bg-primary) !important;
+}
+
+body.day-mode .section-bg-secondary {
+  background-color: var(--bg-secondary) !important;
+}
+
+/* --- Buttons --- */
+body.day-mode .btn-primary {
+  background: linear-gradient(135deg, #c9222f 0%, #a01825 100%) !important;
+  color: #ffffff !important;
+  border-color: rgba(201, 34, 47, 0.5) !important;
+}
+
+body.day-mode .btn-primary:hover {
+  box-shadow: 0 0 20px rgba(201, 34, 47, 0.35) !important;
+}
+
+body.day-mode .btn-primary::before {
+  background: linear-gradient(135deg, #e63946 0%, #c9222f 100%) !important;
+}
+
+body.day-mode .btn-outline {
+  color: var(--accent-primary) !important;
+  border-color: var(--border-accent) !important;
+}
+
+body.day-mode .btn-outline:hover {
+  background: rgba(201, 34, 47, 0.06) !important;
+  border-color: var(--accent-primary) !important;
+}
+
+/* --- Card, container, and form backgrounds --- */
+body.day-mode .modal-content {
+  background-color: var(--bg-surface) !important;
+  border-color: rgba(26, 21, 32, 0.1) !important;
+}
+
+body.day-mode input,
+body.day-mode textarea {
+  background-color: var(--bg-card) !important;
+  border-color: rgba(26, 21, 32, 0.1) !important;
+  color: var(--text-primary) !important;
+}
+
+body.day-mode input::placeholder,
+body.day-mode textarea::placeholder {
+  color: var(--text-muted) !important;
+}
+
+body.day-mode input:focus,
+body.day-mode textarea:focus {
+  border-color: var(--accent-primary) !important;
+}
+
+/* --- Progress bars --- */
+body.day-mode .progress-fill {
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-warm)) !important;
+}
+
+/* --- Hero video: keep visible in day mode --- */
+body.day-mode .video-bg video {
+  opacity: 0.35 !important;
+  mix-blend-mode: multiply;
+}
+
+/* --- Ambient glow much subtler in day --- */
+body.day-mode .ambient-glow {
+  opacity: 0.04 !important;
+}
+
+/* --- Portfolio card category badge & thumbnails --- */
+body.day-mode .project-card img {
+  opacity: 0.9 !important;
+}
+
+/* --- Text gradient still vibrant in day mode --- */
+body.day-mode .text-gradient-red {
+  background: linear-gradient(135deg, #c9222f, #e63946, #d42d3a) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* --- Section title stays dark in day --- */
+body.day-mode .section-title {
+  color: var(--text-primary) !important;
+}
+
+/* --- Film strip lighter in day --- */
+body.day-mode .film-strip-border {
+  opacity: 0.3;
+}
+
+/* ============================================
+   CINEMATIC FILM STRIP DECORATION
+   ============================================ */
+.film-strip-border {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--border-subtle) 0px,
+    var(--border-subtle) 12px,
+    transparent 12px,
+    transparent 20px
+  );
+  height: 3px;
+}
+

@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { Link } from 'react-scroll';
@@ -16,32 +16,30 @@ const stats = [
 
 gsap.registerPlugin(useGSAP);
 
-export default function Hero() {
+export default function Hero({ theme }) {
   const container = useRef();
   const spotlightRef = useRef(null);
+  const videoRef = useRef(null);
 
   useGSAP(() => {
     const tl = gsap.timeline();
 
-    // Cinematic Stealth Reveal Sequence
-    // Elements start clipped or blurred and fade into existence slowly
-    tl.from('.badge', { opacity: 0, duration: 2, ease: 'power2.out' })
+    tl.from('.badge', { opacity: 0, y: -20, duration: 1.2, ease: 'power3.out' })
       .from('.hero-title-line', {
-        clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
-        y: 10,
+        clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)',
+        y: 25,
         opacity: 0,
-        stagger: 0.3,
-        duration: 1.8,
-        ease: 'power4.inOut'
-      }, '-=1.2')
-      .from('.subtitle', { opacity: 0, filter: 'blur(8px)', duration: 2, ease: 'power2.out' }, '-=1')
-      .from('.cta-btn', { opacity: 0, filter: 'blur(5px)', stagger: 0.2, duration: 1.5, ease: 'power2.out' }, '-=1')
-      .from('.stat-item', { opacity: 0, y: 15, stagger: 0.15, duration: 1.5, ease: 'power2.out' }, '-=0.8');
+        stagger: 0.2,
+        duration: 1.2,
+        ease: 'power3.out'
+      }, '-=0.6')
+      .from('.subtitle', { opacity: 0, y: 15, duration: 1.2, ease: 'power2.out' }, '-=0.5')
+      .from('.cta-btn', { opacity: 0, y: 15, stagger: 0.12, duration: 1.0, ease: 'power3.out' }, '-=0.6')
+      .from('.stat-item', { opacity: 0, y: 15, stagger: 0.1, duration: 1.0, ease: 'power2.out' }, '-=0.5');
 
-    // Slow ominous background drift instead of interactive 3D parallax
     gsap.to('.video-bg', {
-      scale: 1.08,
-      duration: 30,
+      scale: 1.05,
+      duration: 20,
       ease: 'none',
       repeat: -1,
       yoyo: true
@@ -49,103 +47,150 @@ export default function Hero() {
 
   }, { scope: container });
 
-  // Custom Noir Spotlight following the cursor
+  // Pause background video when scrolled off-screen to free GPU/CPU
   useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
+  // Scoped spotlight listener on hero container
+  useEffect(() => {
+    const heroEl = container.current;
+    if (!heroEl) return;
+
+    let rafId = null;
     const moveSpotlight = (e) => {
-      if (!spotlightRef.current) return;
-      const x = e.clientX;
-      const y = e.clientY;
-      spotlightRef.current.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.08) 0%, transparent 600px)`;
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        if (spotlightRef.current) {
+          const rect = heroEl.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          spotlightRef.current.style.background = `radial-gradient(circle 450px at ${x}px ${y}px, rgba(239,68,68,0.06) 0%, transparent 100%)`;
+        }
+        rafId = null;
+      });
     };
-    window.addEventListener('mousemove', moveSpotlight);
-    return () => window.removeEventListener('mousemove', moveSpotlight);
+
+    heroEl.addEventListener('mousemove', moveSpotlight, { passive: true });
+    return () => {
+      heroEl.removeEventListener('mousemove', moveSpotlight);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return (
     <section
       id="hero"
       ref={container}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#030303]"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden section-bg-primary"
     >
+      {/* Ambient glow orbs */}
+      <div className="ambient-glow red absolute -top-40 -right-40 z-10" />
+      <div className="ambient-glow violet absolute -bottom-60 -left-40 z-10" />
+
       {/* Spotlight Overlay */}
       <div ref={spotlightRef} className="absolute inset-0 z-20 pointer-events-none transition-opacity duration-300" />
 
-      {/* Background Video - Darkened for Noir but still clearly visible */}
+      {/* Background Video */}
       <div className="absolute inset-0 z-0 video-bg origin-center">
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
-          className="w-full h-full object-cover opacity-40 contrast-125 brightness-75 mix-blend-screen"
+          preload="metadata"
+          className="w-full h-full object-cover opacity-35 contrast-110"
           poster={posterImg}
         >
           <source src={bgVideo} type="video/mp4" />
         </video>
-        {/* Subtle gradient so text is readable, but video remains visible */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-[#030303]/40 to-[#030303]/60 pointer-events-none" />
+        {/* Gradient overlay strictly behind content */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-black/30 pointer-events-none" />
       </div>
 
       {/* Main content */}
       <div className="relative z-30 max-w-7xl mx-auto px-6 lg:px-8 text-center pt-20">
 
         {/* Badge */}
-        <div className="badge inline-flex items-center gap-2 px-4 py-2 border border-white/20 bg-black/40 backdrop-blur-md mb-12 shadow-[0_0_20px_rgba(0,0,0,0.8)]">
-          <span className="w-2 h-2 rounded-full bg-white opacity-70 animate-pulse" />
-          <span className="text-white/80 text-xs font-semibold uppercase tracking-[0.4em]">
+        <div className="badge inline-flex items-center gap-3 px-4 py-1.5 rounded-full mb-10 border border-neutral-700/80 bg-neutral-900/95">
+          <span className="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444] animate-pulse" />
+          <span className="text-neutral-200 text-xs font-semibold tracking-widest uppercase">
             Available for projects
           </span>
         </div>
 
         {/* Hero Title */}
         <h1
-          className="section-title text-6xl md:text-8xl lg:text-9xl leading-none mb-8 tracking-widest"
+          className="section-title text-6xl md:text-8xl lg:text-9xl leading-none mb-6 tracking-widest"
           style={{ fontFamily: 'Bebas Neue, Impact, sans-serif' }}
         >
-          <span className="hero-title-line block text-white/90 drop-shadow-[0_4px_20px_rgba(0,0,0,1)]">CINEMATIC</span>
-          <span className="hero-title-line block text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]">STORYTELLING</span>
-          <span className="hero-title-line block text-white/40 text-3xl md:text-4xl lg:text-5xl mt-6 font-normal tracking-[0.5em]">
-            Video Editor
+          <span className="hero-title-line block text-white drop-shadow-sm">
+            CINEMATIC
+          </span>
+          <span className="hero-title-line block text-gradient-red">
+            STORYTELLING
+          </span>
+          <span 
+            className="hero-title-line block text-2xl md:text-3xl lg:text-4xl mt-4 font-semibold tracking-[0.25em] uppercase text-neutral-200"
+            style={{ fontFamily: 'Inter, sans-serif' }}
+          >
+            Video Editor & Filmmaker
           </span>
         </h1>
 
         {/* Subtitle */}
-        <p className="subtitle text-gray-500 text-sm md:text-base max-w-2xl mx-auto mt-8 mb-14 leading-loose tracking-wide">
-          Crafting visually striking narratives in the shadows. Expert video editing, VFX, and motion graphics. Turning raw footage into stark, cinematic masterpieces.
+        <p className="subtitle text-base md:text-lg max-w-2xl mx-auto mt-6 mb-12 leading-relaxed text-neutral-300 font-normal">
+          Crafting visually striking narratives through expert video editing, VFX, and motion graphics. Turning raw footage into cinematic masterpieces.
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-6 justify-center mb-24">
+        <div className="flex flex-col sm:flex-row gap-5 justify-center mb-20">
           <Link to="showreel" smooth duration={1000} className="cta-btn cursor-pointer">
-            <button className="btn-primary flex items-center gap-3 text-xs px-12 py-5 w-full justify-center bg-white text-black hover:bg-gray-300 transition-colors shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)]">
+            <button className="btn-primary flex items-center gap-3 text-xs px-10 py-4 w-full justify-center">
               <FaPlay className="text-[10px]" />
               WATCH SHOWREEL
             </button>
           </Link>
           <Link to="contact" smooth duration={1000} className="cta-btn cursor-pointer">
-            <button className="btn-outline text-xs px-12 py-5 w-full border-gray-600 text-gray-400 hover:border-white hover:text-white transition-all bg-transparent">
+            <button className="btn-outline flex justify-center text-xs px-10 py-4 w-full">
               HIRE ME
             </button>
           </Link>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 max-w-4xl mx-auto border-t border-white/5 pt-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 max-w-4xl mx-auto pt-10 border-t border-neutral-800">
           {stats.map((stat) => (
             <div key={stat.label} className="stat-item text-center">
-              <div className="text-2xl md:text-3xl font-bold text-white/90 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
+              <div className="text-3xl md:text-4xl font-bold text-red-500 drop-shadow-[0_0_12px_rgba(239,68,68,0.4)]" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
                 {stat.value}
               </div>
-              <div className="text-gray-600 text-[10px] uppercase tracking-[0.3em] mt-3">{stat.label}</div>
+              <div className="text-xs uppercase tracking-wider mt-2 font-medium text-neutral-400">{stat.label}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-3 cursor-pointer opacity-50 hover:opacity-100 transition-opacity">
-        <span className="text-gray-500 text-[9px] uppercase tracking-[0.4em]">Scroll</span>
-        <div className="w-px h-12 bg-gradient-to-b from-gray-500 to-transparent" />
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-3 cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+        <span className="text-[10px] uppercase tracking-[0.3em] font-medium text-neutral-400">Scroll</span>
+        <div className="w-px h-12 bg-gradient-to-b from-red-500 to-transparent" />
       </div>
     </section>
   );
